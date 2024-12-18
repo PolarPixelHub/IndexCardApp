@@ -72,10 +72,6 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         invalidate()
     }
 
-    fun getDrawingBitmap(): Bitmap {
-        return mBitmap.copy(Bitmap.Config.ARGB_8888, true)
-    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -151,6 +147,15 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         super.onAttachedToWindow()
         init(resources.displayMetrics)
     }
+
+    fun getDrawingBitmap(): Bitmap {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        draw(canvas)
+        return bitmap
+    }
+
+
 }
 
 

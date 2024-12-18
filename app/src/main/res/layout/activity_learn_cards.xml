@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center">  <!-- Centering the entire layout -->
 
     <!-- Invisible box at the top -->
+    <ImageView
+        android:id="@+id/saved_canvas_view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:scaleType="centerCrop"/>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="90dp"
         android:background="#00000000" />
 
     <!-- Card Label -->
@@ -71,19 +77,25 @@
             android:layout_marginTop="10dp"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/toggle_sides_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Toggle Sides"
-        android:layout_marginTop="10dp"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/toggle_sides_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toggle Sides"
+            android:layout_marginTop="10dp"/>
 
-    <Button
-        android:id="@+id/show_next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show Next Card"
-        android:layout_marginTop="10dp"/>
+        <Button
+            android:id="@+id/show_next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Next Card"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/manage_cards_button"
@@ -113,5 +125,16 @@
             android:layout_marginStart="16dp"/>
     </LinearLayout>
 
+    <!-- RecyclerView for displaying saved drawings -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/drawRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
 </LinearLayout>
+
 
