@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Invisible box at the top -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#00000000" />
+
+    <!-- ListView to display the flashcards -->
+    <ListView
+        android:id="@+id/card_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:scrollbars="vertical"
+        android:scrollingCache="false"
+        android:focusable="true"
+        android:background="@drawable/card_list_border" />
+
+    <!-- Back button at the bottom-left -->
+    <Button
+        android:id="@+id/back_three_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:text="Back"
+        android:layout_margin="16dp" />
+
+</LinearLayout>
+
+
+

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">IndexCardApp</string>
+    <string name="no_cards_available">No cards available</string>
+</resources>
