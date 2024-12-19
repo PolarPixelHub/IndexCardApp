@@ -46,4 +46,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rename Project" />
+
+    <Button
+        android:id="@+id/btn_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option" />
 </LinearLayout>

@@ -26,6 +26,7 @@
         <activity android:name=".AddCardActivity" />
         <activity android:name=".LearnCardsActivity" />
         <activity android:name=".ManageCardsActivity" />
+        <activity android:name=".OptionActivity" />
     </application>
 
 </manifest>

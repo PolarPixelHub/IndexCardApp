@@ -35,6 +35,9 @@ class LearnCardsActivity : AppCompatActivity() {
         // Initialize views
         initViews()
 
+        // Load preferences and set visibility
+        applyComponentVisibility()
+
         // Initialize the draw list and adapter
         drawList = mutableListOf() // Initialize the list of draw bitmaps
         drawAdapter = DrawAdapter(drawList) // Initialize the adapter with the draw list
@@ -181,6 +184,20 @@ class LearnCardsActivity : AppCompatActivity() {
         currentIndex = -1
         cardLabel.text = getString(R.string.no_cards_available)
         Toast.makeText(this, R.string.no_cards_available, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun applyComponentVisibility() {
+        val sharedPreferences = getSharedPreferences("LearnCardsPreferences", MODE_PRIVATE)
+        val showComponents = sharedPreferences.getBoolean("ShowComponents", true)
+
+        // Set visibility based on preferences
+        drawingCanvas.visibility = if (showComponents) View.VISIBLE else View.GONE
+        drawRecyclerView.visibility = if (showComponents) View.VISIBLE else View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyComponentVisibility() // Reapply visibility when returning to this activity
     }
 }
 

@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity() {
         deleteButton!!.setOnClickListener { v: View? -> deleteProject() }
 
         renameButton!!.setOnClickListener { renameProject() }
+
+        findViewById<Button>(R.id.btn_option).setOnClickListener {
+            startActivity<OptionActivity>()
+        }
     }
 
     private fun loadProjectList() {
