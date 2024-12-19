@@ -191,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         // Simulating data loading with a delay
         Handler(Looper.getMainLooper()).postDelayed({
             hideLoadingScreen() // Hide loading screen after data is loaded
-        }, 5000) // Simulate loading delay (3 seconds)
+        }, 3000) // Simulate loading delay (3 seconds)
     }
 
     // Show loading screen

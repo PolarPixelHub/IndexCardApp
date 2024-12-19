@@ -11,30 +11,30 @@
         android:id="@+id/manage_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Manage Project"
-        android:textSize="24sp"
+        android:text="@string/manage_project"
+        android:textSize="40sp"
         android:layout_marginBottom="16dp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:typeface="serif"/>
 
     <Button
         android:id="@+id/btn_add_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Card"
+        android:text="@string/add_card"
         android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/btn_learn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Learn"
+        android:text="@string/learn"
         android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/btn_change_project"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Projects"
+        android:text="@string/change_projects"
         android:layout_marginBottom="16dp"/>
 </LinearLayout>
-

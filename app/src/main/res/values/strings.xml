@@ -9,4 +9,8 @@
     <string name="option">Option</string>
     <string name="loading_please_wait">Please wait while we load…</string>
     <string name="loading_logo_desc">Penguin Logo</string>
+    <string name="manage_project">Manage Project</string>
+    <string name="add_card">Add Card</string>
+    <string name="learn">Learn</string>
+    <string name="change_projects">Change Projects</string>
 </resources>
