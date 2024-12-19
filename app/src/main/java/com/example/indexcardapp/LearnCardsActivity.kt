@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.properties.Delegates
-import java.util.Random
 import androidx.recyclerview.widget.GridLayoutManager
 
 class LearnCardsActivity : AppCompatActivity() {
@@ -21,8 +19,8 @@ class LearnCardsActivity : AppCompatActivity() {
     private lateinit var cardLabel: TextView
     private lateinit var drawingCanvas: PaintView
     private lateinit var flashcardManager: FlashcardManager
-    private var currentIndex by Delegates.notNull<Int>() // Current index of the flashcard
     private lateinit var cards: MutableList<Flashcard> // List of flashcards
+    private var currentIndex: Int = 0 // Current index of the flashcard
     private var toggleSides = false // Toggle between card sides
     private lateinit var savedCanvasView: ImageView // ImageView to display saved drawings
     private lateinit var drawList: MutableList<Bitmap> // List of drawing bitmaps
@@ -46,13 +44,13 @@ class LearnCardsActivity : AppCompatActivity() {
         // Load preferences and set visibility
         applyComponentVisibility()
 
-        // Initialize the draw list and adapter
-        drawList = mutableListOf() // Initialize the list of draw bitmaps
-        drawAdapter = DrawAdapter(drawList) // Initialize the adapter with the draw list
+        // Initialize drawing components
+        drawList = mutableListOf()
+        drawAdapter = DrawAdapter(drawList)
 
         // Load the selected project from intent
         val selectedProject = intent.getStringExtra("SELECTED_PROJECT") ?: run {
-            Toast.makeText(this, "Error: No project selected!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.error_no_project_selected, Toast.LENGTH_LONG).show()
             finish() // Exit the activity if no project is selected
             return
         }
@@ -98,14 +96,7 @@ class LearnCardsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.back_button_two).setOnClickListener { hidePaintView() }
         findViewById<Button>(R.id.manage_cards_button).setOnClickListener { navigateToManageCards() }
         findViewById<Button>(R.id.back_button).setOnClickListener { navigateToManageActivity() }
-        togglePaintButton.setOnClickListener {
-            if (drawingCanvas.visibility == View.GONE) {
-                showPaintView()
-            } else {
-                hidePaintView()
-            }
-        }
-
+        togglePaintButton.setOnClickListener { togglePaintView() }
         saveButton.setOnClickListener { saveDrawing(drawingCanvas.getDrawingBitmap()) }
         clearButton.setOnClickListener { drawingCanvas.clear() }
         backButtonTwo.setOnClickListener { hidePaintView() }
@@ -123,9 +114,7 @@ class LearnCardsActivity : AppCompatActivity() {
         }
 
         // Randomly select a flashcard that hasn't been fully mastered
-        do {
-            currentIndex = Random().nextInt(filteredCards.size)
-        } while (filteredCards[currentIndex].correctCount >= 10)
+        currentIndex = filteredCards.indices.random()
 
         val card = filteredCards[currentIndex]
         cardLabel.text = if (toggleSides) card.side1 else card.side2 // Display the appropriate side
@@ -133,61 +122,54 @@ class LearnCardsActivity : AppCompatActivity() {
 
     // Flip the current flashcard
     private fun flipCard() {
-        if (currentIndex == -1 || cards.isEmpty()) {
-            Toast.makeText(this, "No cards to flip.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         val card = cards[currentIndex]
         cardLabel.text = if (cardLabel.text == card.side1) card.side2 else card.side1 // Toggle between sides
     }
 
     // Mark the current flashcard as correct
     private fun markCorrect() {
-        if (currentIndex == -1) {
-            Toast.makeText(this, "No card selected.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        flashcardManager.markCorrect(currentIndex) // Mark the card as correct
-        showNextCard() // Show the next card
+        flashcardManager.markCorrect(currentIndex)
+        showNextCard()
     }
 
     // Mark the current flashcard as incorrect
     private fun markIncorrect() {
-        if (currentIndex == -1) {
-            Toast.makeText(this, "No card selected.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        flashcardManager.markIncorrect(currentIndex) // Mark the card as incorrect
-        showNextCard() // Show the next card
+        flashcardManager.markIncorrect(currentIndex)
+        showNextCard()
     }
 
     // Toggle between card sides
     private fun toggleCardSide() {
-        toggleSides = !toggleSides // Toggle the flag
-        flipCard() // Flip the card to show the other side
+        toggleSides = !toggleSides
+        flipCard()
     }
 
     // Save the current drawing
     private fun saveDrawing(bitmap: Bitmap) {
-        drawList.add(bitmap) // Add the bitmap to the drawing list
+        drawList.add(bitmap)
         if (drawList.size > 10) {
-            drawList.removeAt(0) // Keep only the last 10 items
+            drawList.removeAt(0)
         }
-        drawAdapter.notifyDataSetChanged() // Notify the adapter to update the RecyclerView
-        displaySavedCanvas(bitmap) // Display the saved drawing in the ImageView
+        drawAdapter.notifyItemInserted(drawList.size - 1)
+        displaySavedCanvas(bitmap)
         drawingCanvas.clear()
     }
 
     // Display the latest saved drawing in the ImageView
     private fun displaySavedCanvas(bitmap: Bitmap) {
-        savedCanvasView.setImageBitmap(bitmap) // Set the bitmap on the ImageView
-        savedCanvasView.visibility = View.VISIBLE // Make the ImageView visible
+        savedCanvasView.setImageBitmap(bitmap)
+        savedCanvasView.visibility = View.VISIBLE
     }
 
     // Show/hide PaintView and related buttons
+    private fun togglePaintView() {
+        if (drawingCanvas.visibility == View.GONE) {
+            showPaintView()
+        } else {
+            hidePaintView()
+        }
+    }
+
     private fun showPaintView() {
         drawingCanvas.visibility = View.VISIBLE
         paintButtonsContainer.visibility = View.VISIBLE
@@ -229,24 +211,24 @@ class LearnCardsActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("LearnCardsPreferences", MODE_PRIVATE)
         val showComponents = sharedPreferences.getBoolean("ShowComponents", true)
 
-        // Set visibility based on preferences
         drawRecyclerView.visibility = if (showComponents) View.VISIBLE else View.GONE
         paintButtonsContainer.visibility = if (showComponents) View.GONE else View.GONE // Ensure hidden initially
     }
 
     // Clear all saved drawings from RecyclerView
     private fun clearAllDrawings() {
-        drawList.clear() // Clear the drawing list
-        drawAdapter.notifyDataSetChanged() // Notify the adapter to update the RecyclerView
-        Toast.makeText(this, "All drawings cleared.", Toast.LENGTH_SHORT).show() // Show confirmation message
-        savedCanvasView.visibility = View.GONE // Hide the saved canvas ImageView
+        drawList.clear()
+        drawAdapter.notifyItemRangeRemoved(0, drawList.size)
+        Toast.makeText(this, R.string.cleared_all_drawings, Toast.LENGTH_SHORT).show()
+        savedCanvasView.visibility = View.GONE
     }
 
     override fun onResume() {
         super.onResume()
-        applyComponentVisibility() // Reapply visibility when returning to this activity
+        applyComponentVisibility()
     }
 }
+
 
 
 

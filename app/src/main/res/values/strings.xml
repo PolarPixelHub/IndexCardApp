@@ -13,8 +13,23 @@
     <string name="add_card">Add Card</string>
     <string name="learn">Learn</string>
     <string name="change_projects">Change Projects</string>
-    <string name="input_chinese_pinyin_hint">Enter Chinese Character + Pinyin</string>
-    <string name="input_english_translation_hint">Enter English Translation</string>
+    <string name="input_chinese_pinyin_hint">Enter First Language</string>
+    <string name="input_english_translation_hint">Enter Second Language</string>
     <string name="add_card_button_text">Add Card</string>
+    <string name="cleared_all_drawings">All drawings Deleted</string>
+    <string name="error_no_project_selected">Error no project selected</string>
     <string name="back_button_text">Back</string>
+    <string name="card_content">Card Content</string>
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
+    <string name="back">Back</string>
+    <string name="toggle_paint">Paint</string>
+    <string name="manage_cards">Card</string>
+    <string name="toggle_sides">Sides</string>
+    <string name="flip_card">Flip Card</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="clear_all">Clear All</string>
+    <string name="show_next_card">Show Next Card</string>
+    <string name="non_text">Card Content</string>
 </resources>

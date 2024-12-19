@@ -44,24 +44,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="12dp">
 
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="12dp">
 
                 <Button
-                    android:id="@+id/btn_delete_project"
+                    android:id="@+id/btn_select_project"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/delete_project"
+                    android:text="@string/select_project"
                     android:textColor="#FFFFFF"
                     android:background="@drawable/round_button"
-                    android:padding="12dp" />
+                    android:padding="12dp"/>
 
                 <Button
                     android:id="@+id/btn_rename_project"
@@ -75,13 +77,14 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_select_project"
+                android:id="@+id/btn_delete_project"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_project"
+                android:text="@string/delete_project"
                 android:textColor="#FFFFFF"
                 android:background="@drawable/round_button"
-                android:padding="12dp"/>
+                android:padding="12dp" />
         </LinearLayout>
     </LinearLayout>
 

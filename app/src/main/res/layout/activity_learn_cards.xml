@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">  <!-- Centering the entire layout -->
+    android:gravity="center"> <!-- Centering the entire layout -->
 
     <!-- Invisible box at the top -->
     <ImageView
         android:id="@+id/saved_canvas_view"
         android:layout_width="1dp"
         android:layout_height="1dp"
-        android:scaleType="centerCrop"/>
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
 
+    <!-- Padding space -->
     <View
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:background="#00000000" /> <!-- Padding space -->
+        android:background="#00000000" />
 
     <!-- Card Label -->
     <TextView
         android:id="@+id/card_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Card Content"
-        android:textSize="24sp"
+        android:text="@string/non_text"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:typeface="serif"/>
 
     <!-- Canvas View -->
     <com.example.indexcardapp.PaintView
@@ -38,9 +42,10 @@
         android:background="@color/white"
         android:visibility="gone" /> <!-- Initially hidden -->
 
-    <!-- Buttons -->
+    <!-- Paint Buttons Container -->
     <LinearLayout
         android:id="@+id/paint_buttons_container"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -49,25 +54,38 @@
 
         <Button
             android:id="@+id/save_button"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="@string/save"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/round_button"/>
 
         <Button
             android:id="@+id/clear_button"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_marginEnd="18dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Clear"
-            android:layout_marginStart="16dp" />
+            android:text="@string/clear"
+            android:layout_marginStart="16dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/round_button"/>
 
         <Button
             android:id="@+id/back_button_two"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Back"
-            android:layout_marginStart="16dp" />
+            android:text="@string/back"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/round_button"/>
     </LinearLayout>
 
+    <!-- Main Buttons Container -->
     <LinearLayout
         android:id="@+id/buttons_container"
         android:layout_width="match_parent"
@@ -75,33 +93,50 @@
         android:orientation="horizontal"
         android:gravity="center">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
 
+            <!-- Row 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="12dp">
 
                 <Button
                     android:id="@+id/toggle_paint_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Toggle Paint" />
+                    android:text="@string/toggle_paint"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle" />
+
                 <Button
                     android:id="@+id/manage_cards_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Manage Cards" />
+                    android:text="@string/manage_cards"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle" />
+
                 <Button
                     android:id="@+id/toggle_sides_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Toggle Sides" />
+                    android:text="@string/toggle_sides"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
             <!-- Row 2 -->
@@ -109,26 +144,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="12dp">
 
                 <Button
                     android:id="@+id/flip_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Flip Card" />
+                    android:text="@string/flip_card"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:id="@+id/correct_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Correct"
+                    android:text="@string/correct"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
 
                 <Button
                     android:id="@+id/incorrect_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Incorrect"
+                    android:text="@string/incorrect"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
             </LinearLayout>
 
@@ -137,40 +185,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="12dp">
 
                 <Button
                     android:id="@+id/clear_all_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Clear All" />
+                    android:text="@string/clear_all"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:id="@+id/show_next_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Show Next Card"
+                    android:text="@string/show_next_card"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
+
                 <Button
                     android:id="@+id/back_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Back"
+                    android:text="@string/back"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/drawRecyclerView"
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:padding="8dp"
-            android:layout_margin="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/drawRecyclerView"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>
-
-
-
-
-
