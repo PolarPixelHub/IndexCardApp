@@ -28,13 +28,13 @@ class LearnCardsActivity : AppCompatActivity() {
     private lateinit var drawList: MutableList<Bitmap> // List of drawing bitmaps
     private lateinit var drawAdapter: DrawAdapter // Adapter for displaying drawings in RecyclerView
     private lateinit var drawRecyclerView: RecyclerView // RecyclerView to display saved drawings
-
     private lateinit var togglePaintButton: Button
     private lateinit var paintButtonsContainer: LinearLayout
     private lateinit var buttonsContainer: LinearLayout
     private lateinit var saveButton: Button
     private lateinit var clearButton: Button
     private lateinit var backButtonTwo: Button
+    private lateinit var clearAllButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +85,7 @@ class LearnCardsActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.save_button)
         clearButton = findViewById(R.id.clear_button)
         backButtonTwo = findViewById(R.id.back_button_two)
+        clearAllButton = findViewById(R.id.clear_all_button)
     }
 
     // Set up listeners for buttons
@@ -108,6 +109,7 @@ class LearnCardsActivity : AppCompatActivity() {
         saveButton.setOnClickListener { saveDrawing(drawingCanvas.getDrawingBitmap()) }
         clearButton.setOnClickListener { drawingCanvas.clear() }
         backButtonTwo.setOnClickListener { hidePaintView() }
+        clearAllButton.setOnClickListener { clearAllDrawings() }
     }
 
     // Display the next flashcard
@@ -230,6 +232,14 @@ class LearnCardsActivity : AppCompatActivity() {
         // Set visibility based on preferences
         drawRecyclerView.visibility = if (showComponents) View.VISIBLE else View.GONE
         paintButtonsContainer.visibility = if (showComponents) View.GONE else View.GONE // Ensure hidden initially
+    }
+
+    // Clear all saved drawings from RecyclerView
+    private fun clearAllDrawings() {
+        drawList.clear() // Clear the drawing list
+        drawAdapter.notifyDataSetChanged() // Notify the adapter to update the RecyclerView
+        Toast.makeText(this, "All drawings cleared.", Toast.LENGTH_SHORT).show() // Show confirmation message
+        savedCanvasView.visibility = View.GONE // Hide the saved canvas ImageView
     }
 
     override fun onResume() {

@@ -97,6 +97,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Manage Cards" />
+                <Button
+                    android:id="@+id/toggle_sides_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Toggle Sides" />
             </LinearLayout>
 
             <!-- Row 2 -->
@@ -132,14 +137,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="16dp">
+                android:gravity="center">
 
                 <Button
-                    android:id="@+id/toggle_sides_button"
+                    android:id="@+id/clear_all_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Toggle Sides" />
+                    android:text="Clear All" />
 
                 <Button
                     android:id="@+id/show_next_button"
