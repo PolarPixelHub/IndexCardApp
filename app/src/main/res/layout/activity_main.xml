@@ -10,46 +10,88 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select or Create a Project"
-        android:textSize="18sp"
+        android:text="@string/your_project"
+        android:textSize="40sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:typeface="serif"/>
 
     <ListView
         android:id="@+id/project_list"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"
-        />
-
-    <Button
-        android:id="@+id/btn_select_project"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Project"/>
+        android:dividerHeight="1dp"/>
 
     <Button
         android:id="@+id/btn_create_project"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create New Project"/>
+        android:text="@string/create_new_project"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/round_button"
+        android:padding="12dp"/>
 
-    <Button
-        android:id="@+id/btn_delete_project"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/buttons_container_main"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Project"/>
+        android:orientation="horizontal"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/btn_rename_project"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rename Project" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_delete_project"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete_project"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btn_rename_project"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rename_project"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/round_button"
+                    android:padding="12dp"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_select_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_project"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/round_button"
+                android:padding="12dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Option" />
+        android:text="@string/option"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/round_button"
+        android:padding="12dp"/>
 </LinearLayout>
+

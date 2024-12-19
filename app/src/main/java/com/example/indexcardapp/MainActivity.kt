@@ -1,83 +1,64 @@
 package com.example.indexcardapp
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.AdapterView.OnItemClickListener
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
-    private var projectListView: ListView? = null
-    private var selectButton: Button? = null
-    private var createButton: Button? = null
-    private var deleteButton: Button? = null
-    private var renameButton: Button? = null
-    private var projectFiles: ArrayList<String>? = null
-    private var adapter: ArrayAdapter<String>? = null
+
+    private lateinit var projectListView: ListView
+    private lateinit var selectButton: Button
+    private lateinit var createButton: Button
+    private lateinit var deleteButton: Button
+    private lateinit var renameButton: Button
+    private lateinit var projectFiles: ArrayList<String>
+    private lateinit var adapter: ArrayAdapter<String>
     private var selectedProject: String? = null
+    private lateinit var buttonsContainerMain: LinearLayout
+    private lateinit var loadingDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Show the loading screen when starting the activity
+        showLoadingScreen()
+
+        // Load data or perform operations
+        performDataLoading()
+
         // Initialize views
-        projectListView = findViewById(R.id.project_list)
-        selectButton = findViewById(R.id.btn_select_project)
-        createButton = findViewById(R.id.btn_create_project)
-        deleteButton = findViewById(R.id.btn_delete_project)
-        renameButton = findViewById(R.id.btn_rename_project)
+        initializeViews()
 
         // Load project list
         loadProjectList()
 
         // Handle item selection
-        projectListView!!.onItemClickListener =
-            OnItemClickListener { parent, view, position, id ->
-                selectedProject = projectFiles!![position]
-                Toast.makeText(this@MainActivity, "Selected: $selectedProject", Toast.LENGTH_SHORT).show()
-                view.isSelected = true
-            }
+        setupItemClickListener()
 
-        // Select Project Button
-        selectButton!!.setOnClickListener { v: View? ->
-            if (selectedProject != null) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Loaded Project: $selectedProject", Toast.LENGTH_SHORT
-                ).show()
-                val intent = Intent(this, ManageActivity::class.java)
-                intent.putExtra("SELECTED_PROJECT", selectedProject)
-                Log.d("Here: ", selectedProject!!)
-                startActivity(intent)
-            } else {
-                Toast.makeText(
-                    this@MainActivity,
-                    "No project selected",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
+        // Set up button listeners
+        setupButtonListeners()
+    }
 
-        // Create Project Button
-        createButton!!.setOnClickListener { v: View? -> createProject() }
-
-        // Delete Project Button
-        deleteButton!!.setOnClickListener { v: View? -> deleteProject() }
-
-        renameButton!!.setOnClickListener { renameProject() }
-
-        findViewById<Button>(R.id.btn_option).setOnClickListener {
-            startActivity<OptionActivity>()
-        }
+    private fun initializeViews() {
+        projectListView = findViewById(R.id.project_list)
+        selectButton = findViewById(R.id.btn_select_project)
+        createButton = findViewById(R.id.btn_create_project)
+        deleteButton = findViewById(R.id.btn_delete_project)
+        renameButton = findViewById(R.id.btn_rename_project)
+        buttonsContainerMain = findViewById(R.id.buttons_container_main)
     }
 
     private fun loadProjectList() {
@@ -85,140 +66,149 @@ class MainActivity : AppCompatActivity() {
         val directory: File = filesDir
         projectFiles = ArrayList()
 
-        for (file in directory.listFiles()!!) {
+        directory.listFiles()?.forEach { file ->
             if (file.name.endsWith(".json")) {
-                projectFiles!!.add(file.name)
+                projectFiles.add(file.name)
             }
         }
 
         // Populate the ListView
-        adapter = ArrayAdapter(this, R.layout.simple_list_item_1, R.id.customtext, projectFiles!!)
-        projectListView?.adapter = adapter
+        adapter = ArrayAdapter(this, R.layout.simple_list_item_1, R.id.customtext, projectFiles)
+        projectListView.adapter = adapter
     }
 
-    private fun createProject() {
+    private fun setupItemClickListener() {
+        projectListView.onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
+            selectedProject = projectFiles[position]
+            Toast.makeText(this, "Selected: $selectedProject", Toast.LENGTH_SHORT).show()
+            view.isSelected = true
+        }
+    }
+
+    private fun setupButtonListeners() {
+        selectButton.setOnClickListener { onSelectProjectClick() }
+        createButton.setOnClickListener { onCreateProjectClick() }
+        deleteButton.setOnClickListener { onDeleteProjectClick() }
+        renameButton.setOnClickListener { onRenameProjectClick() }
+        findViewById<Button>(R.id.btn_option).setOnClickListener { startActivity<OptionActivity>() }
+    }
+
+    private fun onSelectProjectClick() {
+        selectedProject?.let {
+            Toast.makeText(this, "Loaded Project: $it", Toast.LENGTH_SHORT).show()
+            Intent(this, ManageActivity::class.java).apply {
+                putExtra("SELECTED_PROJECT", it)
+                startActivity(this)
+            }
+        } ?: run {
+            Toast.makeText(this, "No project selected", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun onCreateProjectClick() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Create New Project")
 
         val input = EditText(this)
         builder.setView(input)
 
-        builder.setPositiveButton("Create") { _: DialogInterface?, _: Int ->
-            val projectName = input.text.toString().trim { it <= ' ' }
+        builder.setPositiveButton("Create") { _, _ ->
+            val projectName = input.text.toString().trim()
             if (projectName.isNotEmpty()) {
                 val fileName = "$projectName.json"
                 val file = File(filesDir, fileName)
-                try {
-                    if (file.createNewFile()) {
-                        Toast.makeText(
-                            this,
-                            "Project Created: $fileName",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        loadProjectList() // Refresh the list
-                    } else {
-                        Toast.makeText(
-                            this,
-                            "Project already exists!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Error: " + e.message, Toast.LENGTH_SHORT)
-                        .show()
+                if (file.createNewFile()) {
+                    Toast.makeText(this, "Project Created: $fileName", Toast.LENGTH_SHORT).show()
+                    loadProjectList() // Refresh the list
+                } else {
+                    Toast.makeText(this, "Project already exists!", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(
-                    this,
-                    "Project name cannot be empty",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "Project name cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
         builder.setNegativeButton("Cancel", null)
         builder.show()
     }
 
-    private fun deleteProject() {
-        if (selectedProject != null) {
+    private fun onDeleteProjectClick() {
+        selectedProject?.let {
             AlertDialog.Builder(this)
                 .setTitle("Delete Project")
-                .setMessage("Are you sure you want to delete '$selectedProject'?")
-                .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
-                    val file: File? = selectedProject?.let { File(filesDir, it) }
-                    if (file != null) {
-                        if (file.delete()) {
-                            Toast.makeText(
-                                this,
-                                "Deleted: $selectedProject",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            selectedProject = null
-                            loadProjectList() // Refresh list
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Failed to delete project",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                .setMessage("Are you sure you want to delete '$it'?")
+                .setPositiveButton("Yes") { _, _ ->
+                    val file = File(filesDir, it)
+                    if (file.delete()) {
+                        Toast.makeText(this, "Deleted: $it", Toast.LENGTH_SHORT).show()
+                        selectedProject = null
+                        loadProjectList() // Refresh list
+                    } else {
+                        Toast.makeText(this, "Failed to delete project", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .setNegativeButton("No", null)
                 .show()
-        } else {
+        } ?: run {
             Toast.makeText(this, "No project selected", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun selectProject() {
-        val selectedIndex = projectListView?.checkedItemPosition
-        if (selectedIndex != null && selectedIndex != -1) {
-            selectedProject = projectFiles?.get(selectedIndex)
-            Toast.makeText(this, "Loaded Project: $selectedProject", Toast.LENGTH_SHORT).show()
-            // Transition to ManageActivity
-            intent.putExtra("SELECTED_PROJECT", selectedProject)
-            startActivity<ManageActivity>()
-        } else {
-            Toast.makeText(this, "No project selected", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun renameProject() {
-        if (selectedProject != null) {
-            val currentFile = File(filesDir, selectedProject!!)
+    private fun onRenameProjectClick() {
+        selectedProject?.let { currentFileName ->
+            val currentFile = File(filesDir, currentFileName)
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Rename Project")
 
-            val input = EditText(this)
-            input.hint = "Enter new name"
+            val input = EditText(this).apply { hint = "Enter new name" }
             builder.setView(input)
 
             builder.setPositiveButton("Rename") { _, _ ->
                 val newName = input.text.toString().trim()
-                if (newName.isEmpty()) {
-                    Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-
-                val newFileName = "$newName.json"
-                val newFile = File(filesDir, newFileName)
-
-                if (newFile.exists()) {
-                    Toast.makeText(this, "A project with this name already exists", Toast.LENGTH_SHORT).show()
-                } else if (currentFile.renameTo(newFile)) {
-                    Toast.makeText(this, "Renamed to: $newFileName", Toast.LENGTH_SHORT).show()
-                    selectedProject = newFileName // Update selectedProject
-                    loadProjectList() // Refresh project list
+                if (newName.isNotEmpty()) {
+                    val newFileName = "$newName.json"
+                    val newFile = File(filesDir, newFileName)
+                    if (newFile.exists()) {
+                        Toast.makeText(this, "A project with this name already exists", Toast.LENGTH_SHORT).show()
+                    } else if (currentFile.renameTo(newFile)) {
+                        Toast.makeText(this, "Renamed to: $newFileName", Toast.LENGTH_SHORT).show()
+                        selectedProject = newFileName // Update selectedProject
+                        loadProjectList() // Refresh project list
+                    } else {
+                        Toast.makeText(this, "Failed to rename project", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(this, "Failed to rename project", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show()
                 }
             }
-
             builder.setNegativeButton("Cancel", null)
             builder.show()
-        } else {
+        } ?: run {
             Toast.makeText(this, "No project selected", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun performDataLoading() {
+        // Simulating data loading with a delay
+        Handler(Looper.getMainLooper()).postDelayed({
+            hideLoadingScreen() // Hide loading screen after data is loaded
+        }, 5000) // Simulate loading delay (3 seconds)
+    }
+
+    // Show loading screen
+    private fun showLoadingScreen() {
+        val loadingScreen = LayoutInflater.from(this).inflate(R.layout.loading_screen, null)
+        loadingDialog = AlertDialog.Builder(this)
+            .setView(loadingScreen)
+            .setCancelable(false) // Prevent interaction
+            .create()
+
+        loadingDialog.show()
+    }
+
+    // Hide loading screen
+    private fun hideLoadingScreen() {
+        if (::loadingDialog.isInitialized && loadingDialog.isShowing) {
+            loadingDialog.dismiss()
         }
     }
 
@@ -226,4 +216,5 @@ class MainActivity : AppCompatActivity() {
     private inline fun <reified T : AppCompatActivity> startActivity() {
         startActivity(Intent(this, T::class.java))
     }
+
 }

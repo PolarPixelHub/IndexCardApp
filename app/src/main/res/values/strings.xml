@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">IndexCardApp</string>
     <string name="no_cards_available">No cards available</string>
+    <string name="your_project">Your Project</string>
+    <string name="select_project">Select Project</string>
+    <string name="create_new_project">Create New Project</string>
+    <string name="delete_project">Delete Project</string>
+    <string name="rename_project">Rename Project</string>
+    <string name="option">Option</string>
+    <string name="loading_please_wait">Please wait while we load…</string>
+    <string name="loading_logo_desc">Penguin Logo</string>
 </resources>
