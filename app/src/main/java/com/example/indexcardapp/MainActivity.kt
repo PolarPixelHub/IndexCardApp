@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private var selectButton: Button? = null
     private var createButton: Button? = null
     private var deleteButton: Button? = null
+    private var renameButton: Button? = null
     private var projectFiles: ArrayList<String>? = null
     private var adapter: ArrayAdapter<String>? = null
     private var selectedProject: String? = null
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         selectButton = findViewById(R.id.btn_select_project)
         createButton = findViewById(R.id.btn_create_project)
         deleteButton = findViewById(R.id.btn_delete_project)
+        renameButton = findViewById(R.id.btn_rename_project)
 
         // Load project list
         loadProjectList()
@@ -70,6 +72,8 @@ class MainActivity : AppCompatActivity() {
 
         // Delete Project Button
         deleteButton!!.setOnClickListener { v: View? -> deleteProject() }
+
+        renameButton!!.setOnClickListener { renameProject() }
     }
 
     private fun loadProjectList() {
@@ -171,6 +175,44 @@ class MainActivity : AppCompatActivity() {
             // Transition to ManageActivity
             intent.putExtra("SELECTED_PROJECT", selectedProject)
             startActivity<ManageActivity>()
+        } else {
+            Toast.makeText(this, "No project selected", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun renameProject() {
+        if (selectedProject != null) {
+            val currentFile = File(filesDir, selectedProject!!)
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Rename Project")
+
+            val input = EditText(this)
+            input.hint = "Enter new name"
+            builder.setView(input)
+
+            builder.setPositiveButton("Rename") { _, _ ->
+                val newName = input.text.toString().trim()
+                if (newName.isEmpty()) {
+                    Toast.makeText(this, "Name cannot be empty", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                val newFileName = "$newName.json"
+                val newFile = File(filesDir, newFileName)
+
+                if (newFile.exists()) {
+                    Toast.makeText(this, "A project with this name already exists", Toast.LENGTH_SHORT).show()
+                } else if (currentFile.renameTo(newFile)) {
+                    Toast.makeText(this, "Renamed to: $newFileName", Toast.LENGTH_SHORT).show()
+                    selectedProject = newFileName // Update selectedProject
+                    loadProjectList() // Refresh project list
+                } else {
+                    Toast.makeText(this, "Failed to rename project", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            builder.setNegativeButton("Cancel", null)
+            builder.show()
         } else {
             Toast.makeText(this, "No project selected", Toast.LENGTH_SHORT).show()
         }
