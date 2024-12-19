@@ -21,44 +21,74 @@ class AddCardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_card)
 
         // Initialize views
+        initializeViews()
+
+        // Load the selected project passed through Intent
+        val selectedProject = intent.getStringExtra(EXTRA_SELECTED_PROJECT)
+        if (selectedProject.isNullOrEmpty()) {
+            showErrorAndFinish("Error: No project selected!")
+        } else {
+            Log.d(TAG, "Selected Project: $selectedProject")
+            initializeFlashcardManager(selectedProject)
+        }
+
+        // Handle Add Card Button
+        if (selectedProject != null) {
+            handleAddCardButton(selectedProject)
+        }
+
+        // Handle Back Button
+        handleBackButton()
+    }
+
+    private fun initializeViews() {
         inputSide1 = findViewById(R.id.input_side1)
         inputSide2 = findViewById(R.id.input_side2)
         addCardButton = findViewById(R.id.add_card_button)
         backButton = findViewById(R.id.back_button)
+    }
 
-        // Load the selected project passed through Intent
-        val selectedProject = intent.getStringExtra("SELECTED_PROJECT")
-        if (selectedProject != null) {
-            Log.d("AddCards", selectedProject)
-        }
+    private fun showErrorAndFinish(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        finish()
+    }
 
-        if (selectedProject == null) {
-            Toast.makeText(this, "Error: No project selected!", Toast.LENGTH_LONG).show()
-            finish()
-            return
-        }
-
-        // Initialize FlashcardManager
+    private fun initializeFlashcardManager(selectedProject: String) {
         flashcardManager = FlashcardManager(context = this, fileName = selectedProject)
+    }
 
-        // Handle Add Card Button
+    private fun handleAddCardButton(selectedProject: String) {
         addCardButton.setOnClickListener {
             val side1 = inputSide1.text.toString().trim()
             val side2 = inputSide2.text.toString().trim()
 
             if (side1.isEmpty() || side2.isEmpty()) {
-                Toast.makeText(this, "Please fill both fields.", Toast.LENGTH_SHORT).show()
+                showToast("Please fill both fields.")
             } else {
                 flashcardManager.addCard(side1, side2, selectedProject)
-                Toast.makeText(this, "Card added successfully!", Toast.LENGTH_SHORT).show()
-                inputSide1.text.clear()
-                inputSide2.text.clear()
+                showToast("Card added successfully!")
+                clearInputFields()
             }
         }
+    }
 
-        // Handle Back Button
+    private fun handleBackButton() {
         backButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun clearInputFields() {
+        inputSide1.text.clear()
+        inputSide2.text.clear()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val TAG = "AddCardActivity"
+        const val EXTRA_SELECTED_PROJECT = "SELECTED_PROJECT"
     }
 }

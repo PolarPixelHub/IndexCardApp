@@ -6,29 +6,37 @@
     android:padding="16dp"
     android:gravity="center">
 
+    <!-- Input Field for Chinese Character + Pinyin -->
     <EditText
         android:id="@+id/input_side1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Chinese Character + Pinyin"
-        android:padding="8dp"/>
+        android:hint="@string/input_chinese_pinyin_hint"
+        android:padding="8dp"
+        android:autofillHints="chinese_character_pinyin"
+        android:inputType="text"/>
 
+    <!-- Input Field for English Translation -->
     <EditText
         android:id="@+id/input_side2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter English Translation"
-        android:padding="8dp"/>
+        android:hint="@string/input_english_translation_hint"
+        android:padding="8dp"
+        android:autofillHints="english_translation"
+        android:inputType="text"/>
 
+    <!-- Button to Add Card -->
     <Button
         android:id="@+id/add_card_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Card" />
+        android:text="@string/add_card_button_text" />
 
+    <!-- Button to Navigate Back -->
     <Button
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back" />
+        android:text="@string/back_button_text" />
 </LinearLayout>

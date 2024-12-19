@@ -13,4 +13,8 @@
     <string name="add_card">Add Card</string>
     <string name="learn">Learn</string>
     <string name="change_projects">Change Projects</string>
+    <string name="input_chinese_pinyin_hint">Enter Chinese Character + Pinyin</string>
+    <string name="input_english_translation_hint">Enter English Translation</string>
+    <string name="add_card_button_text">Add Card</string>
+    <string name="back_button_text">Back</string>
 </resources>
