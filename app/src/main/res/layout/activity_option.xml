@@ -4,23 +4,31 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Centered Switch -->
+    <!-- Second Switch: Night Mode Toggle -->
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_toggle_visibility"
+        android:id="@+id/switch_toggle_night"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Visibility of Drawing Canvas"
-        android:layout_gravity="center" />
+        android:text="@string/switch_night_mode_text"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:contentDescription="@string/switch_night_mode_description"
+        android:padding="8dp"
+        android:minHeight="48dp"
+        android:minWidth="48dp" />
 
-    <!-- Back button at the bottom left -->
+    <!-- Back Button at Bottom Left -->
     <Button
         android:id="@+id/back_option_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:text="@string/back_button_text"
         android:layout_gravity="start|bottom"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:contentDescription="@string/back_button_description" />
 </FrameLayout>
+
+
 
 
 

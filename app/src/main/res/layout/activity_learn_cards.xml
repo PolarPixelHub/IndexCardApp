@@ -45,7 +45,6 @@
     <!-- Paint Buttons Container -->
     <LinearLayout
         android:id="@+id/paint_buttons_container"
-        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -54,7 +53,6 @@
 
         <Button
             android:id="@+id/save_button"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -64,7 +62,6 @@
 
         <Button
             android:id="@+id/clear_button"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_marginEnd="18dp"
             android:layout_weight="1"
@@ -76,7 +73,6 @@
 
         <Button
             android:id="@+id/back_button_two"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -115,8 +111,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/toggle_paint"
                     android:textColor="#FFFFFF"
-                    android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:background="@drawable/round_button"/>
 
                 <Button
                     android:id="@+id/manage_cards_button"
@@ -125,8 +120,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/manage_cards"
                     android:textColor="#FFFFFF"
-                    android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:background="@drawable/round_button"/>
 
                 <Button
                     android:id="@+id/toggle_sides_button"
@@ -135,8 +129,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/toggle_sides"
                     android:textColor="#FFFFFF"
-                    android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:background="@drawable/round_button"/>
             </LinearLayout>
 
             <!-- Row 2 -->
@@ -154,8 +147,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flip_card"
                     android:textColor="#FFFFFF"
-                    android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:background="@drawable/round_button"/>
 
                 <Button
                     android:id="@+id/correct_button"
@@ -165,7 +157,6 @@
                     android:text="@string/correct"
                     android:textColor="#FFFFFF"
                     android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
 
                 <Button
@@ -176,7 +167,6 @@
                     android:text="@string/incorrect"
                     android:textColor="#FFFFFF"
                     android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
             </LinearLayout>
 
@@ -195,8 +185,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/clear_all"
                     android:textColor="#FFFFFF"
-                    android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:background="@drawable/round_button"/>
 
                 <Button
                     android:id="@+id/show_next_button"
@@ -206,7 +195,6 @@
                     android:text="@string/show_next_card"
                     android:textColor="#FFFFFF"
                     android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
 
                 <Button
@@ -217,7 +205,6 @@
                     android:text="@string/back"
                     android:textColor="#FFFFFF"
                     android:background="@drawable/round_button"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_marginStart="8dp" />
             </LinearLayout>
         </LinearLayout>

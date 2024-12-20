@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -31,13 +32,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPreferences = getSharedPreferences("LearnCardsPreferences", MODE_PRIVATE)
+        val isNightModeEnabled = sharedPreferences.getBoolean("NightMode", false)
+        AppCompatDelegate.setDefaultNightMode(
+            if (isNightModeEnabled) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+
         setContentView(R.layout.activity_main)
-
-        // Show the loading screen when starting the activity
-        showLoadingScreen()
-
-        // Load data or perform operations
-        performDataLoading()
 
         // Initialize views
         initializeViews()
@@ -184,31 +187,6 @@ class MainActivity : AppCompatActivity() {
             builder.show()
         } ?: run {
             Toast.makeText(this, "No project selected", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun performDataLoading() {
-        // Simulating data loading with a delay
-        Handler(Looper.getMainLooper()).postDelayed({
-            hideLoadingScreen() // Hide loading screen after data is loaded
-        }, 3000) // Simulate loading delay (3 seconds)
-    }
-
-    // Show loading screen
-    private fun showLoadingScreen() {
-        val loadingScreen = LayoutInflater.from(this).inflate(R.layout.loading_screen, null)
-        loadingDialog = AlertDialog.Builder(this)
-            .setView(loadingScreen)
-            .setCancelable(false) // Prevent interaction
-            .create()
-
-        loadingDialog.show()
-    }
-
-    // Hide loading screen
-    private fun hideLoadingScreen() {
-        if (::loadingDialog.isInitialized && loadingDialog.isShowing) {
-            loadingDialog.dismiss()
         }
     }
 

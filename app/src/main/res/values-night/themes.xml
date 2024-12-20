@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PenguinApp" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary colors -->
+        <item name="colorPrimary">#000080</item> <!-- Cool Blue -->
+        <item name="colorPrimaryDark">#104E8B</item> <!-- Darker Cool Blue -->
+        <item name="colorAccent">#FFC107</item> <!-- Bright Yellow -->
+
+        <!-- Background and surfaces -->
+        <item name="android:windowBackground">#121212</item> <!-- Dark background -->
+        <item name="android:statusBarColor">#121212</item> <!-- Dark background -->
+        <item name="android:navigationBarColor">#121212</item> <!-- Dark background -->
+
+        <!-- Text colors -->
+        <item name="android:textColor">#FFFFFF</item> <!-- White text for dark background -->
+
+    </style>
+</resources>

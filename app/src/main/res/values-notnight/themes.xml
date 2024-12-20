@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.PenguinApp" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.PenguinApp" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary colors -->
         <item name="colorPrimary">#1E90FF</item> <!-- Cool Blue -->
         <item name="colorPrimaryDark">#104E8B</item> <!-- Darker Cool Blue -->

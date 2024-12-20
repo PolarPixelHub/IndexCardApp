@@ -24,7 +24,6 @@ class ManageActivity : AppCompatActivity() {
         // Load data or perform operations
         performDataLoading()
 
-
         val selectedProject = intent.getStringExtra("SELECTED_PROJECT")
 
         // Button for adding a card
@@ -78,6 +77,6 @@ class ManageActivity : AppCompatActivity() {
         // Simulating data loading with a delay
         Handler(Looper.getMainLooper()).postDelayed({
             hideLoadingScreen() // Hide loading screen after data is loaded
-        }, 5000) // Simulate loading delay (3 seconds)
+        }, 3000) // Simulate loading delay (3 seconds)
     }
 }
