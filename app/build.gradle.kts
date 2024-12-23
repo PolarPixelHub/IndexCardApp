@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.indexcardapp"
+    namespace = "polarpixel.indexcardapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.indexcardapp"
+        applicationId = "polarpixel.indexcardapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

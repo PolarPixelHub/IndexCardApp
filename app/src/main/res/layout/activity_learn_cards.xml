@@ -35,7 +35,7 @@
         android:typeface="serif"/>
 
     <!-- Canvas View -->
-    <com.example.indexcardapp.PaintView
+    <polarpixel.indexcardapp.PaintView
         android:id="@+id/drawing_Canvas"
         android:layout_width="300dp"
         android:layout_height="400dp"
