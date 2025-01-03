@@ -218,4 +218,18 @@
         android:padding="8dp"
         android:layout_margin="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#00000000" />
+
+    <!-- AdMob Banner Ad -->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adUnitId="ca-app-pub-9458599941618884/3458930133"
+        app:adSize="BANNER"
+        android:layout_gravity="bottom"/>
 </LinearLayout>

@@ -6,6 +6,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 class AddCardActivity : AppCompatActivity() {
 
@@ -14,6 +17,7 @@ class AddCardActivity : AppCompatActivity() {
     private lateinit var addCardButton: Button
     private lateinit var backButton: Button
     private lateinit var flashcardManager: FlashcardManager
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,8 @@ class AddCardActivity : AppCompatActivity() {
 
         // Handle Back Button
         handleBackButton()
+
+        loadAd()
     }
 
     private fun initializeViews() {
@@ -45,6 +51,7 @@ class AddCardActivity : AppCompatActivity() {
         inputSide2 = findViewById(R.id.input_side2)
         addCardButton = findViewById(R.id.add_card_button)
         backButton = findViewById(R.id.back_button)
+        mAdView = findViewById(R.id.adView)
     }
 
     private fun showErrorAndFinish(message: String) {
@@ -89,5 +96,19 @@ class AddCardActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "AddCardActivity"
         const val EXTRA_SELECTED_PROJECT = "SELECTED_PROJECT"
+    }
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, getAdMobExtras())
+            .build()
+
+        mAdView.loadAd(adRequest)
+    }
+    private fun getAdMobExtras(): Bundle {
+        return Bundle().apply {
+            putString("max_ad_content_rating", "G")
+            putString("npa", "1")
+        }
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp">
@@ -85,5 +85,21 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/round_button"
         android:padding="12dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#00000000" />
+
+    <!-- AdMob Banner Ad -->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adUnitId="ca-app-pub-9458599941618884/3458930133"
+        app:adSize="BANNER"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp" />
+
 </LinearLayout>
 

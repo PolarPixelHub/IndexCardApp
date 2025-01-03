@@ -12,6 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 class LearnCardsActivity : AppCompatActivity() {
 
@@ -33,6 +36,7 @@ class LearnCardsActivity : AppCompatActivity() {
     private lateinit var clearButton: Button
     private lateinit var backButtonTwo: Button
     private lateinit var clearAllButton: Button
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,8 @@ class LearnCardsActivity : AppCompatActivity() {
 
         // Show the first flashcard
         showNextCard()
+
+        loadAd()
     }
 
     // Initialize views and UI components
@@ -84,6 +90,7 @@ class LearnCardsActivity : AppCompatActivity() {
         clearButton = findViewById(R.id.clear_button)
         backButtonTwo = findViewById(R.id.back_button_two)
         clearAllButton = findViewById(R.id.clear_all_button)
+        mAdView = findViewById(R.id.adView)
     }
 
     // Set up listeners for buttons
@@ -226,6 +233,20 @@ class LearnCardsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         applyComponentVisibility()
+    }
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, getAdMobExtras())
+            .build()
+
+        mAdView.loadAd(adRequest)
+    }
+    private fun getAdMobExtras(): Bundle {
+        return Bundle().apply {
+            putString("max_ad_content_rating", "G")
+            putString("npa", "1")
+        }
     }
 }
 

@@ -8,10 +8,14 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 class ManageActivity : AppCompatActivity() {
 
     private lateinit var loadingDialog: AlertDialog
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,10 @@ class ManageActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_change_project).setOnClickListener {
             navigateToMainActivity()
         }
+
+        mAdView = findViewById(R.id.adView)
+
+        loadAd()
     }
 
     // Navigate to any activity with selected project
@@ -78,5 +86,19 @@ class ManageActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             hideLoadingScreen() // Hide loading screen after data is loaded
         }, 3000) // Simulate loading delay (3 seconds)
+    }
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, getAdMobExtras())
+            .build()
+
+        mAdView.loadAd(adRequest)
+    }
+    private fun getAdMobExtras(): Bundle {
+        return Bundle().apply {
+            putString("max_ad_content_rating", "G")
+            putString("npa", "1")
+        }
     }
 }

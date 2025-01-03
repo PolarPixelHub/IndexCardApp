@@ -6,12 +6,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 class OptionActivity : AppCompatActivity() {
     private lateinit var nightModeSwitch: SwitchCompat
 
     private val PREF_NAME = "LearnCardsPreferences"
     private val NIGHT_MODE_KEY = "NightMode"
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,23 @@ class OptionActivity : AppCompatActivity() {
         val backButton = findViewById<Button>(R.id.back_option_button)
         backButton.setOnClickListener {
             finish() // Closes the activity and returns to the previous screen
+        }
+
+        mAdView = findViewById(R.id.adView)
+
+        loadAd()
+    }
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, getAdMobExtras())
+            .build()
+
+        mAdView.loadAd(adRequest)
+    }
+    private fun getAdMobExtras(): Bundle {
+        return Bundle().apply {
+            putString("max_ad_content_rating", "G")
+            putString("npa", "1")
         }
     }
 }

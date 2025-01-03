@@ -12,7 +12,10 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.ads.mediation.admob.AdMobAdapter
 import java.io.File
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ArrayAdapter<String>
     private var selectedProject: String? = null
     private lateinit var buttonsContainerMain: LinearLayout
+    private lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,16 @@ class MainActivity : AppCompatActivity() {
 
         // Set up button listeners
         setupButtonListeners()
+
+        loadAd()
+    }
+
+    private fun loadAd() {
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, getAdMobExtras())
+            .build()
+
+        mAdView.loadAd(adRequest)
     }
 
     private fun initializeViews() {
@@ -58,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         deleteButton = findViewById(R.id.btn_delete_project)
         renameButton = findViewById(R.id.btn_rename_project)
         buttonsContainerMain = findViewById(R.id.buttons_container_main)
+        mAdView = findViewById(R.id.adView)
     }
 
     private fun loadProjectList() {
@@ -191,5 +206,13 @@ class MainActivity : AppCompatActivity() {
     private inline fun <reified T : AppCompatActivity> startActivity() {
         startActivity(Intent(this, T::class.java))
     }
+
+    private fun getAdMobExtras(): Bundle {
+        return Bundle().apply {
+            putString("max_ad_content_rating", "G")
+            putString("npa", "1")
+        }
+    }
+
 
 }

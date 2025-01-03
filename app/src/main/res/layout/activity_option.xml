@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:padding="16dp">
 
@@ -23,9 +24,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back_button_text"
-        android:layout_gravity="start|bottom"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/back_button_description" />
+        android:layout_gravity="bottom"
+        android:contentDescription="@string/back_button_description"
+        android:layout_marginBottom="90dp" />
+
+    <!-- AdMob Banner Ad -->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adUnitId="ca-app-pub-9458599941618884/3458930133"
+        app:adSize="BANNER"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp" />
+
 </FrameLayout>
 
 
